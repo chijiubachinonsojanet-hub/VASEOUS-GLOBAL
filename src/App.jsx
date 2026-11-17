@@ -9,6 +9,7 @@ import HowItWorksPage from './pages/public/HowItWorksPage';
 import CategoriesPage from './pages/public/CategoriesPage';
 import ContactPage from './pages/public/ContactPage';
 import PrivacyPolicyPage from './pages/public/PrivacyPolicyPage';
+import TermsPolicyPage from './pages/public/TermsPolicyPage';
 import NotFoundPage from './pages/public/NotFoundPage';
 import LoginPage from './pages/admin/LoginPage';
 import ResetPasswordPage from './pages/admin/ResetPasswordPage';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-and-policies" element={<TermsPolicyPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 

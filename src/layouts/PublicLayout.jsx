@@ -67,7 +67,7 @@ export default function PublicLayout() {
           </nav>
 
           <div className="nav-actions">
-            <button type="button" className="btn btn-ghost" onClick={handleCommunityClick}>
+            <button type="button" className="btn btn-ghost nav-secondary-action" onClick={handleCommunityClick}>
               <MessageCircleMore size={16} />
               Product Group
             </button>
@@ -114,6 +114,9 @@ export default function PublicLayout() {
               ))}
               <li>
                 <Link to="/privacy-policy">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link to="/terms-and-policies">Terms &amp; Policies</Link>
               </li>
             </ul>
           </div>
