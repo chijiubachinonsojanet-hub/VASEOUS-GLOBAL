@@ -19,49 +19,49 @@ export const categoryCatalog = [
     id: 'fashion',
     name: 'Fashion',
     image:
-      'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80',
-    description: 'Trending looks, everyday essentials, and statement pieces sourced directly from China.',
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSwo_RjmAWxDLF_-6UjPSKsoVRdShy3FyMaMHtpGbYMq3As5L-CgcQxv8RTZxn2csL9Rb5D4BZe9rcRGdkzfswyHwhJIRPNJxtHHBOovsu5&usqp=CAc',
+    description: 'Elegant coordinated sets and curated office-to-evening styles for confident women.',
   },
   {
     id: 'shoes',
     name: 'Shoes',
     image:
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80',
-    description: 'Sneakers, heels, sandals, and casual footwear selected for style and comfort.',
+      'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80',
+    description: 'Classic heels, fashion statement shoes, and premium footwear for everyday luxury.',
   },
   {
     id: 'handbags',
     name: 'Handbags',
     image:
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80',
-    description: 'Totes, crossbody styles, backpacks, and chic carry-all options.',
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTLmTZfzQJSNa2bidToprMzStPfOvX844rQwuyY4L-MA1RIXxGl6DmLudTjuLjU-tWt1aLNv1RM7iImTpmyutuYGC2NNJtZOt-MZyIZopHd&usqp=CAc',
+    description: 'Functional and polished handbags designed to complete every signature outfit.',
   },
   {
     id: 'kitchen-home',
     name: 'Kitchen & Home',
     image:
-      'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80',
-    description: 'Practical household tools, organizers, cookware, and daily-use home essentials.',
+      'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ1sSyzP5f-wBpN3BuBYNMBV8hJOOUWCXZnT1TIdI-TF7xvYTcdIwidD20YZygjsP89anbfIiiNrdtWBPkRcySD1137EoRFHkdR99b0d63DJv1L2gHtrZy0E_wC&usqp=CAc',
+    description: 'Lifestyle rituals and home styling pieces inspired by clean, elevated living.',
   },
   {
     id: 'beauty',
     name: 'Beauty',
     image:
-      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
-    description: 'Beauty tools, personal care accessories, and organizing solutions for everyday routines.',
+      'https://m.media-amazon.com/images/I/71l9RiGiPaL._AC_UF1000,1000_QL80_.jpg',
+    description: 'Beauty essentials, glamour items, and finishing touches for an elevated routine.',
   },
   {
     id: 'accessories',
     name: 'Accessories',
     image:
-      'https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=80',
-    description: 'Jewelry, eyewear, belts, watches, and personal add-ons for complete styling.',
+      'https://image.made-in-china.com/202f0j00deJWiaqBMYbj/OEM-ODM-All-Types-of-Jewelries-Alloly-Brass-925-Sterling-Silver-Stainless-Steel-Jewelry-Necklaces-Bracelets-Earrings-Jewelry.webp',
+    description: 'Jewelry, bracelets, and statement accessories that add shine to every look.',
   },
   {
     id: 'other',
     name: 'Other Products',
     image:
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
-    description: 'Custom requests and special product sourcing based on your photo or description.',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHrIavVmB5qBTE_wjl2NHvk8-GPRtRYQb6uiImhqAvWw&s=10',
+    description: 'Custom requests and unique decor accents sourced to match your exact taste.',
   },
 ];

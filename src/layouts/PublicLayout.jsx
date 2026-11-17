@@ -133,20 +133,16 @@ export default function PublicLayout() {
             <h4>Contact</h4>
             <ul className="footer-list contact-list">
               <li>
-                <a href={businessConfig.businessEmailHref}>{businessConfig.businessEmail}</a>
+                <a href={businessConfig.businessEmailHref}>
+                  <Mail size={16} /> {businessConfig.businessEmail}
+                </a>
               </li>
               <li>
-                <a href={businessConfig.whatsappLink}>{businessConfig.whatsappNumberDisplay}</a>
+                <a href={businessConfig.whatsappLink}>
+                  <Phone size={16} /> {businessConfig.whatsappNumberDisplay}
+                </a>
               </li>
             </ul>
-            <div className="footer-meta">
-              <a href={businessConfig.businessEmailHref}>
-                <Mail size={16} /> {businessConfig.businessEmail}
-              </a>
-              <a href={businessConfig.whatsappLink}>
-                <Phone size={16} /> {businessConfig.whatsappNumberDisplay}
-              </a>
-            </div>
           </div>
         </div>
         <div className="container footer-bottom">

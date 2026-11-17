@@ -3,14 +3,13 @@ import {
   ArrowRight,
   CheckCircle2,
   ChevronDown,
-  CircleHelp,
   MessageCircle,
   PackageCheck,
   ShieldCheck,
   Sparkles,
 } from 'lucide-react';
 import { businessConfig, categoryCatalog } from '../../config/businessConfig';
-import { supabase } from '../../lib/supabaseClient';
+import { saveSubscriber } from '../../lib/crmStore';
 import { getCommunityJoinLink, openWhatsAppChat } from '../../utils/whatsapp';
 
 const steps = [
@@ -48,6 +47,44 @@ const valuePillars = [
   'Clear WhatsApp-first communication',
   'No fake stock claims or misleading pricing',
   'Simple pre-order updates from source to delivery',
+];
+
+const featuredProducts = [
+  {
+    name: 'Aesthetic Scarf Set',
+    category: 'Fashion & Style',
+    image: 'https://i.etsystatic.com/52149613/r/il/9fc67f/8108601653/il_fullxfull.8108601653_ft43.jpg',
+  },
+  {
+    name: 'Women’s Statement Heels',
+    category: 'Shoes & Accessories',
+    image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    name: 'Stanley Cup Collection',
+    category: 'Kitchen & Lifestyle',
+    image: 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ1sSyzP5f-wBpN3BuBYNMBV8hJOOUWCXZnT1TIdI-TF7xvYTcdIwidD20YZygjsP89anbfIiiNrdtWBPkRcySD1137EoRFHkdR99b0d63DJv1L2gHtrZy0E_wC&usqp=CAc',
+  },
+  {
+    name: 'Crystal Bracelet',
+    category: 'Accessories',
+    image: 'https://image.made-in-china.com/202f0j00deJWiaqBMYbj/OEM-ODM-All-Types-of-Jewelries-Alloly-Brass-925-Sterling-Silver-Stainless-Steel-Jewelry-Necklaces-Bracelets-Earrings-Jewelry.webp',
+  },
+];
+
+const serviceBlocks = [
+  {
+    title: 'Sourcing',
+    description: 'Send us a link, photo or description and we find the best option from China.',
+  },
+  {
+    title: 'Bulk & Retail',
+    description: 'Wholesale quantities for resellers, boutiques and repeat business buyers.',
+  },
+  {
+    title: 'Customization',
+    description: 'Private branding and custom requests for gifts, souvenir pieces, and business orders.',
+  },
 ];
 
 function HomePage() {
@@ -91,42 +128,27 @@ function HomePage() {
 
     const email = formData.email.trim().toLowerCase();
 
-    if (!supabase) {
-      setSubmitState({
-        type: 'success',
-        message: 'Subscription request prepared. Add your Supabase credentials in the .env file to save this data.',
-      });
-      return;
-    }
-
     try {
-      const { data: existingSubscriber } = await supabase
-        .from('email_subscribers')
-        .select('id')
-        .eq('email', email)
-        .maybeSingle();
-
-      if (existingSubscriber) {
-        setSubmitState({ type: 'error', message: 'This email is already subscribed to Vaseous updates.' });
-        return;
-      }
-
-      const { error } = await supabase.from('email_subscribers').insert({
-        first_name: formData.firstName.trim(),
+      const result = await saveSubscriber({
+        firstName: formData.firstName.trim(),
         email,
-        category_interest: formData.categoryInterest,
-        consent_given: true,
-        consent_timestamp: new Date().toISOString(),
-        unsubscribed: false,
+        categoryInterest: formData.categoryInterest,
+        consent: true,
       });
 
-      if (error) {
-        throw error;
+      if (!result.ok) {
+        if (result.reason === 'duplicate') {
+          setSubmitState({ type: 'error', message: 'This email is already subscribed to Vaseous updates.' });
+          return;
+        }
+        throw new Error('Subscriber could not be saved.');
       }
 
       setSubmitState({
         type: 'success',
-        message: 'You are subscribed successfully. Keep an eye on your inbox and the WhatsApp community for new pre-order drops.',
+        message: result.source === 'supabase'
+          ? 'You are subscribed successfully. Keep an eye on your inbox and the WhatsApp community for new pre-order drops.'
+          : 'Your subscription was saved locally and will appear in the CRM dashboard for follow-up.',
       });
       setFormData({ firstName: '', email: '', categoryInterest: 'Fashion', consent: false });
     } catch (error) {
@@ -144,10 +166,10 @@ function HomePage() {
         <div className="container hero-grid">
           <div className="hero-copy">
             <span className="eyebrow">China-to-Nigeria pre-order sourcing</span>
-            <h1>Source smarter products from China without the stress.</h1>
+            <h1>Your finds. Our sourcing. Your doorstep.</h1>
             <p>
-              Vaseous Global helps shoppers in Nigeria discover reliable pre-order items, ask questions on WhatsApp,
-              and receive shipping guidance from sourcing to delivery.
+              Shop selected products from China or send us a link, photo or description for a custom sourcing quote.
+              We help you discover, compare and order with fewer hassles and more confidence.
             </p>
             <div className="hero-actions">
               <a href="#how-it-works" className="btn btn-primary">
@@ -161,36 +183,42 @@ function HomePage() {
             </div>
             <div className="hero-trust">
               <div>
-                <strong>WhatsApp-first</strong>
-                <span>Direct vendor chat</span>
+                <strong>Verified</strong>
+                <span>Supplier sourcing</span>
               </div>
               <div>
-                <strong>Custom sourcing</strong>
-                <span>Photo or description</span>
+                <strong>Fast</strong>
+                <span>Direct WhatsApp updates</span>
+              </div>
+              <div>
+                <strong>Local</strong>
+                <span>Delivery across Nigeria</span>
               </div>
             </div>
           </div>
 
           <div className="hero-visual">
-            <div className="visual-card primary-card">
-              <div className="logo-hero-wrap">
-                <img src={businessConfig.logoPath} alt="Vaseous logo" className="hero-logo" />
+            <div className="hero-visual-card">
+              <div className="hero-photo-stack">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSwo_RjmAWxDLF_-6UjPSKsoVRdShy3FyMaMHtpGbYMq3As5L-CgcQxv8RTZxn2csL9Rb5D4BZe9rcRGdkzfswyHwhJIRPNJxtHHBOovsu5&usqp=CAc"
+                  alt="Fashion set product"
+                  className="hero-photo hero-photo-one"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80"
+                  alt="Women’s heels product"
+                  className="hero-photo hero-photo-two"
+                />
               </div>
-              <div className="mini-badge">
-                <Sparkles size={18} />
-                New drops
-              </div>
-              <div className="product-stack">
-                <div className="stack-item fashion-item">Fashion</div>
-                <div className="stack-item shoes-item">Shoes</div>
-                <div className="stack-item bag-item">Bags</div>
-              </div>
-              <div className="visual-footer">
-                <div>
-                  <span className="meta-label">Category</span>
-                  <strong>Pre-order curated picks</strong>
+              <div className="hero-floating-badge">
+                <div className="logo-hero-wrap">
+                  <img src={businessConfig.logoPath} alt="Vaseous logo" className="hero-logo" />
                 </div>
-                <button type="button" className="icon-pill" onClick={() => openWhatsAppChat('Hi Vaseous, I want to discover current pre-order products.')}>Ask on WhatsApp</button>
+                <div>
+                  <span>Pre-order picks</span>
+                  <strong>Selected this week</strong>
+                </div>
               </div>
             </div>
           </div>
@@ -216,8 +244,8 @@ function HomePage() {
 
       <section className="section">
         <div className="container">
-          <div className="section-header">
-            <span className="eyebrow">Product categories</span>
+          <div className="section-header before-grid-header">
+            <span className="eyebrow">Shop by category</span>
             <h2>Browse what you can source with Vaseous.</h2>
           </div>
           <div className="category-grid">
@@ -239,6 +267,53 @@ function HomePage() {
         </div>
       </section>
 
+      <section className="section light-section">
+        <div className="container">
+          <div className="section-header centered">
+            <span className="eyebrow">Featured pre-orders</span>
+            <h2>Popular picks for this week.</h2>
+          </div>
+          <div className="featured-grid">
+            {featuredProducts.map((product) => (
+              <article key={product.name} className="product-card">
+                <div className="product-image-wrap">
+                  <img src={product.image} alt={product.name} />
+                  <span className="product-tag">Pre-order</span>
+                </div>
+                <div className="product-info">
+                  <span className="product-category">{product.category}</span>
+                  <h3>{product.name}</h3>
+                  <div className="product-meta">
+                    <span className="custom-price-pill">Custom price</span>
+                    <button type="button" onClick={() => openWhatsAppChat(`Hi Vaseous, I want to enquire about ${product.name}.`)}>
+                      Ask about it
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container service-wrap">
+          <div className="section-header centered">
+            <span className="eyebrow">Our services</span>
+            <h2>More than a store — a sourcing partner for individuals and businesses.</h2>
+          </div>
+          <div className="service-grid">
+            {serviceBlocks.map((service) => (
+              <div key={service.title} className="service-card">
+                <div className="service-icon">✓</div>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="how-it-works" className="section light-section">
         <div className="container">
           <div className="section-header centered">
@@ -252,6 +327,19 @@ function HomePage() {
                 <p>{step}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container request-panel">
+          <div>
+            <span className="eyebrow">Need something specific?</span>
+            <h2>Send us a photo, product link or description and we will quote it for you.</h2>
+          </div>
+          <div className="request-panel-actions">
+            <button type="button" className="btn btn-primary" onClick={() => openWhatsAppChat('Hi Vaseous, I want a custom sourcing quote.')}>Request an item</button>
+            <button type="button" className="btn btn-ghost" onClick={handleCommunityClick}>Join WhatsApp group</button>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MessageCircle, Mail } from 'lucide-react';
 import { businessConfig } from '../../config/businessConfig';
-import { supabase } from '../../lib/supabaseClient';
+import { saveEnquiry } from '../../lib/crmStore';
 import { openWhatsAppChat, getCommunityJoinLink } from '../../utils/whatsapp';
 
 function ContactPage() {
@@ -26,29 +26,23 @@ function ContactPage() {
       return;
     }
 
-    if (!supabase) {
-      setSubmitState({
-        type: 'success',
-        message: 'Your enquiry was prepared. Add your Supabase details in the .env file to save it to the database.',
-      });
-      return;
-    }
-
     try {
-      const { error } = await supabase.from('enquiries').insert({
-        full_name: formData.fullName.trim(),
+      const result = await saveEnquiry({
+        fullName: formData.fullName.trim(),
         email: formData.email.trim().toLowerCase(),
-        enquiry_type: formData.enquiryType,
+        enquiryType: formData.enquiryType,
         message: formData.message.trim(),
       });
 
-      if (error) {
-        throw error;
+      if (!result.ok) {
+        throw new Error('Enquiry could not be stored.');
       }
 
       setSubmitState({
         type: 'success',
-        message: 'Your enquiry has been sent successfully. The Vaseous team will follow up through your contact details.',
+        message: result.source === 'supabase'
+          ? 'Your enquiry has been sent successfully. The Vaseous team will follow up through your contact details.'
+          : 'Your enquiry was saved locally and is ready for review in the CRM workspace.',
       });
       setFormData({ fullName: '', email: '', enquiryType: 'General enquiry', message: '' });
     } catch (error) {
