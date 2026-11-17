@@ -50,3 +50,59 @@ create index if not exists idx_enquiries_email on enquiries(email);
 create index if not exists idx_email_subscribers_email on email_subscribers(email);
 create index if not exists idx_leads_status on leads(status);
 create index if not exists idx_orders_status on orders(status);
+
+alter table public.enquiries enable row level security;
+alter table public.email_subscribers enable row level security;
+alter table public.leads enable row level security;
+alter table public.customers enable row level security;
+alter table public.orders enable row level security;
+
+create policy if not exists "Allow anon insert on enquiries"
+on public.enquiries
+for insert
+with check (true);
+
+create policy if not exists "Allow anon select on enquiries"
+on public.enquiries
+for select
+using (true);
+
+create policy if not exists "Allow anon insert on email_subscribers"
+on public.email_subscribers
+for insert
+with check (true);
+
+create policy if not exists "Allow anon select on email_subscribers"
+on public.email_subscribers
+for select
+using (true);
+
+create policy if not exists "Allow anon insert on leads"
+on public.leads
+for insert
+with check (true);
+
+create policy if not exists "Allow anon select on leads"
+on public.leads
+for select
+using (true);
+
+create policy if not exists "Allow anon insert on customers"
+on public.customers
+for insert
+with check (true);
+
+create policy if not exists "Allow anon select on customers"
+on public.customers
+for select
+using (true);
+
+create policy if not exists "Allow anon insert on orders"
+on public.orders
+for insert
+with check (true);
+
+create policy if not exists "Allow anon select on orders"
+on public.orders
+for select
+using (true);

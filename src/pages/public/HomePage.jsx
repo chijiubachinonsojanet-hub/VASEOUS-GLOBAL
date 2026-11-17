@@ -58,10 +58,10 @@ const featuredProducts = [
   {
     name: 'Women’s Statement Heels',
     category: 'Shoes & Accessories',
-    image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80',
+    image: '/images/womens-statement-heels.webp',
   },
   {
-    name: 'Stanley Cup Collection',
+    name: 'Modern Pot Set',
     category: 'Kitchen & Lifestyle',
     image: 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ1sSyzP5f-wBpN3BuBYNMBV8hJOOUWCXZnT1TIdI-TF7xvYTcdIwidD20YZygjsP89anbfIiiNrdtWBPkRcySD1137EoRFHkdR99b0d63DJv1L2gHtrZy0E_wC&usqp=CAc',
   },
@@ -206,7 +206,7 @@ function HomePage() {
                   className="hero-photo hero-photo-one"
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80"
+                  src="/images/womens-statement-heels.webp"
                   alt="Women’s heels product"
                   className="hero-photo hero-photo-two"
                 />

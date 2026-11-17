@@ -26,7 +26,7 @@ export const categoryCatalog = [
     id: 'shoes',
     name: 'Shoes',
     image:
-      'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=900&q=80',
+      '/images/womens-statement-heels.webp',
     description: 'Classic heels, fashion statement shoes, and premium footwear for everyday luxury.',
   },
   {
